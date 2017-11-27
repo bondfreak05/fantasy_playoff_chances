@@ -1,0 +1,100 @@
+import itertools
+import copy
+permutations = list(itertools.product([0,1], repeat=6))
+print (*permutations, sep='\n')
+pairs = [['JT', 9], ['Blake', 7], ['Daniel', 6], ['Justin', 7], ['Zach', 6], ['Steve', 6],
+        ['Alex', 5], ['Wil', 6], ['Ryan', 5], ['Mike', 5], ['Klieb', 5], ['Eric', 5]]
+pairs_control = [['JT', 9], ['Blake', 7], ['Daniel', 6], ['Justin', 7], ['Zach', 6], ['Steve', 6],
+        ['Alex', 5], ['Wil', 6], ['Ryan', 5], ['Mike', 5], ['Klieb', 5], ['Eric', 5]]
+chances = [['JT', 0], ['Blake', 0], ['Daniel', 0], ['Justin', 0], ['Zach', 0], ['Steve', 0],
+          ['Alex', 0], ['Wil', 0], ['Ryan', 0], ['Mike', 0], ['Klieb', 0], ['Eric', 0]]
+index = 1
+def homewin(index):
+    global pairs
+    if index == 1:
+        pairs[0][1] = pairs[0][1] + 1
+    if index == 2:
+        pairs[2][1] = pairs[2][1] + 1
+    if index == 3:
+        pairs[4][1] = pairs[4][1] + 1
+    if index == 4:
+        pairs[6][1] = pairs[6][1] + 1
+    if index == 5:
+        pairs[8][1] = pairs[8][1] + 1
+    if index == 6:
+        pairs[10][1] = pairs[10][1] + 1
+
+
+def awaywin(index):
+    global pairs
+    if index == 1:
+        pairs[1][1] = pairs[1][1] + 1
+    if index == 2:
+        pairs[3][1] = pairs[3][1] + 1
+    if index == 3:
+        pairs[5][1] = pairs[5][1] + 1
+    if index == 4:
+        pairs[7][1] = pairs[7][1] + 1
+    if index == 5:
+        pairs[9][1] = pairs[9][1] + 1
+    if index == 6:
+        pairs[11][1] = pairs[11][1] + 1
+
+
+def getKey(elem):
+    return elem[1]
+
+def standings():
+    global pairs
+    global chances
+    pairs = sorted(pairs, key=getKey) #reverse this
+    print(pairs)
+ #   for i in range(len(pairs)):
+ #       j = str(i)
+  #      if i < 7:
+  #          for z in chances:
+    #            if chances[z][0] == j:
+   #                 chances[z][1] += 1 #need to get this working correctly - distribute playoff makes to chances[]
+
+for i in permutations:
+        (a, b, c, d, e, f) = i
+        if a == 0:
+            homewin(index)
+        elif a == 1:
+            awaywin(index)
+        index += 1
+        if b == 0:
+            homewin(index)
+        elif b == 1:
+            awaywin(index)
+        index += 1
+        if c == 0:
+            homewin(index)
+        elif c == 1:
+            awaywin(index)
+        index += 1
+        if d == 0:
+            homewin(index)
+        elif d == 1:
+            awaywin(index)
+        index += 1
+        if e == 0:
+            homewin(index)
+        elif e == 1:
+            awaywin(index)
+        index += 1
+        if f == 0:
+            homewin(index)
+        elif f == 1:
+            awaywin(index)
+        index = 1
+        standings()
+        pairs = copy.deepcopy(pairs_control)
+
+
+print(chances)
+
+
+
+
+
