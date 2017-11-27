@@ -2,13 +2,12 @@ import itertools
 import copy
 permutations = list(itertools.product([0,1], repeat=6))
 print (*permutations, sep='\n')
-pairs = [['JT', 9], ['Blake', 7], ['Daniel', 6], ['Justin', 7], ['Zach', 6], ['Steve', 6],
-        ['Alex', 5], ['Wil', 6], ['Ryan', 5], ['Mike', 5], ['Klieb', 5], ['Eric', 5]]
-pairs_control = [['JT', 9], ['Blake', 7], ['Daniel', 6], ['Justin', 7], ['Zach', 6], ['Steve', 6],
-        ['Alex', 5], ['Wil', 6], ['Ryan', 5], ['Mike', 5], ['Klieb', 5], ['Eric', 5]]
+pairs = [['JT', 9, 1352], ['Blake', 7, 1316], ['Daniel', 6, 1380], ['Justin', 7, 1189], ['Zach', 6, 1342], ['Steve', 6, 1240],
+        ['Alex', 5, 1210], ['Wil', 6, 1243], ['Ryan', 5, 1171], ['Mike', 5, 1146], ['Klieb', 5, 1156], ['Eric', 5, 1245]]
 chances = [['JT', 0], ['Blake', 0], ['Daniel', 0], ['Justin', 0], ['Zach', 0], ['Steve', 0],
           ['Alex', 0], ['Wil', 0], ['Ryan', 0], ['Mike', 0], ['Klieb', 0], ['Eric', 0]]
 index = 1
+pairs_control = copy.deepcopy(pairs)
 def homewin(index):
     global pairs
     if index == 1:
@@ -23,7 +22,6 @@ def homewin(index):
         pairs[8][1] = pairs[8][1] + 1
     if index == 6:
         pairs[10][1] = pairs[10][1] + 1
-
 
 def awaywin(index):
     global pairs
@@ -40,21 +38,24 @@ def awaywin(index):
     if index == 6:
         pairs[11][1] = pairs[11][1] + 1
 
-
 def getKey(elem):
-    return elem[1]
+    return elem[1], elem[2]
+
+def scores():
+        global pairs
+        #get random score and add to pairs[i][2]
 
 def standings():
-    global pairs
-    global chances
-    pairs = sorted(pairs, key=getKey) #reverse this
-    print(pairs)
- #   for i in range(len(pairs)):
- #       j = str(i)
-  #      if i < 7:
-  #          for z in chances:
-    #            if chances[z][0] == j:
-   #                 chances[z][1] += 1 #need to get this working correctly - distribute playoff makes to chances[]
+        global pairs
+        global chances
+        pairs = sorted(pairs, key=getKey, reverse=True)
+        print(pairs)
+        for i in range(len(pairs)):
+                if i<7:
+                        for z in range(len(chances)):
+                                if chances[z][0] is pairs[i][0]:
+                                        chances[z][1] += 1
+        print(pairs)
 
 for i in permutations:
         (a, b, c, d, e, f) = i
@@ -93,8 +94,3 @@ for i in permutations:
 
 
 print(chances)
-
-
-
-
-
