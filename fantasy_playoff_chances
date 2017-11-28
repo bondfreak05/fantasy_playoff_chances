@@ -2,13 +2,12 @@ import itertools
 import copy
 import random
 permutations = list(itertools.product([0,1], repeat=6))
-print (*permutations, sep='\n')
-
-pairs = [['JT', 9, 1352], ['Blake', 7, 1316], ['Daniel', 6, 1380], ['Justin', 7, 1189], ['Zach', 6, 1342], ['Steve', 6, 1240],
-        ['Alex', 5, 1210], ['Wil', 6, 1243], ['Ryan', 5, 1171], ['Mike', 5, 1146], ['Klieb', 5, 1156], ['Eric', 5, 1245]]
-chances = [['JT', 0], ['Blake', 0], ['Daniel', 0], ['Justin', 0], ['Zach', 0], ['Steve', 0],
-          ['Alex', 0], ['Wil', 0], ['Ryan', 0], ['Mike', 0], ['Klieb', 0], ['Eric', 0]]
-randomscore = [111, 116, 107, 112, 104, 102, 99, 101, 88, 93, 98, 120, 100, 93, 85, 81, 66, 103, 72, 95, 111, 135]
+#print (*permutations, sep='\n')
+pairs = [['JT', 9, 1358], ['Blake', 7, 1333], ['Daniel', 6, 1393], ['Justin', 7, 1189], ['Zach', 6, 1342], ['Steve', 6, 1260],
+        ['Alex', 5, 1210], ['Wil', 6, 1257], ['Ryan', 5, 1171], ['Mike', 5, 1146], ['Klieb', 5, 1156], ['Eric', 5, 1245]]
+chances = [['JT', 0, 0], ['Blake', 0, 0], ['Daniel', 0, 0], ['Justin', 0, 0], ['Zach', 0, 0], ['Steve', 0, 0],
+          ['Alex', 0, 0], ['Wil', 0, 0], ['Ryan', 0, 0], ['Mike', 0, 0], ['Klieb', 0, 0], ['Eric', 0, 0]]
+randomscore = [111, 116, 107, 112, 104, 102, 99, 101, 88, 93, 98, 120, 100, 93, 85, 81, 66, 103, 72, 95, 111, 135, 97, 117, 102, 92, 82, 66, 108, 117, 75, 78]
 index = 1
 pairs_control = copy.deepcopy(pairs)
 def homewin(index):
@@ -61,16 +60,23 @@ def standings():
         pairs = sorted(pairs, key=getKey, reverse=True)
         print(pairs)
         for i in range(len(pairs)):
-                if i<7:
+                if i<6:
                         for z in range(len(chances)):
                                 if chances[z][0] is pairs[i][0]:
                                         chances[z][1] += 1
+                elif i > 10:
+                    for z in range(len(chances)):
+                        if chances[z][0] is pairs[i][0]:
+                            chances[z][2] += 1
+
         print(pairs)
 
 def results():
     for i in range(len(chances)):
         chances[i][1] = 100 * (chances[i][1] / 64)
+        chances[i][2] = 100 * (chances[i][2] / 64)
         print(chances[i][0] + " has a %s percent chance of making the playoffs." % (chances[i][1]))
+        print(chances[i][0] + " has a %s percent chance of being buttfumbler." % (chances[i][2]))
 
 for i in permutations:
         (a, b, c, d, e, f) = i
