@@ -1,11 +1,14 @@
 import itertools
 import copy
+import random
 permutations = list(itertools.product([0,1], repeat=6))
 print (*permutations, sep='\n')
+
 pairs = [['JT', 9, 1352], ['Blake', 7, 1316], ['Daniel', 6, 1380], ['Justin', 7, 1189], ['Zach', 6, 1342], ['Steve', 6, 1240],
         ['Alex', 5, 1210], ['Wil', 6, 1243], ['Ryan', 5, 1171], ['Mike', 5, 1146], ['Klieb', 5, 1156], ['Eric', 5, 1245]]
 chances = [['JT', 0], ['Blake', 0], ['Daniel', 0], ['Justin', 0], ['Zach', 0], ['Steve', 0],
           ['Alex', 0], ['Wil', 0], ['Ryan', 0], ['Mike', 0], ['Klieb', 0], ['Eric', 0]]
+randomscore = [111, 116, 107, 112, 104, 102, 99, 101, 88, 93, 98, 120, 100, 93, 85, 81, 66, 103, 72, 95, 111, 135]
 index = 1
 pairs_control = copy.deepcopy(pairs)
 def homewin(index):
@@ -41,8 +44,15 @@ def awaywin(index):
 def getKey(elem):
     return elem[1], elem[2]
 
+def getKey1(elem):
+    return elem[1]
+
 def scores():
         global pairs
+        global randomscore
+        for i in range(len(pairs)):
+            random.shuffle(randomscore)
+            pairs[i][2] += randomscore[0]
         #get random score and add to pairs[i][2]
 
 def standings():
@@ -56,6 +66,11 @@ def standings():
                                 if chances[z][0] is pairs[i][0]:
                                         chances[z][1] += 1
         print(pairs)
+
+def results():
+    for i in range(len(chances)):
+        chances[i][1] = 100 * (chances[i][1] / 64)
+        print(chances[i][0] + " has a %s percent chance of making the playoffs." % (chances[i][1]))
 
 for i in permutations:
         (a, b, c, d, e, f) = i
@@ -89,8 +104,9 @@ for i in permutations:
         elif f == 1:
             awaywin(index)
         index = 1
+        scores()
         standings()
         pairs = copy.deepcopy(pairs_control)
 
-
-print(chances)
+chances = sorted(chances, key=getKey1, reverse=True)
+results()
